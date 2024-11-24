@@ -127,7 +127,7 @@ To train the DiT-XL/2-skip:
 3. run the script `run_train.sh`
 
 To train the class-to-video models:
-1. Download the datasets offered by [Xin Ma](https://huggingface.co/maxin-cn) in huggingface: [skytimelapse](maxin-cn/SkyTimelapse), [taichi](maxin-cn/Taichi-HD), [ffs](maxin-cn/FaceForensics). And you have to download [ucf101](https://www.crcv.ucf.edu/data/UCF101/UCF101.rar) from the website.
+1. Download the datasets offered by [Xin Ma](https://huggingface.co/maxin-cn) in huggingface: [skytimelapse](Skip-DiT-open/maxin-cn/SkyTimelapse), [taichi](Skip-DiT-open/maxin-cn/Taichi-HD), [ffs](Skip-DiT-open/maxin-cn/FaceForensics). And you have to download [ucf101](https://www.crcv.ucf.edu/data/UCF101/UCF101.rar) from the website.
 2. Implement the TODOs in the training configs under `class-to-video/configs`
 3. Run the training scripts under `class-to-image/train_scripts`
 
@@ -145,11 +145,11 @@ The code and model weights are licensed under [LICENSE](./class-to-image/LICENSE
 
 
 ## 7. Visualization
-### 6.1. Text-to-Video
+### Text-to-Video
 ![text-to-video visualizations](visuals/case_t2v.jpg)
-### 6.2. Class-to-Video
+### Class-to-Video
 ![class-to-video visualizations](visuals/case_c2v.jpg)
-### 6.3. Text-to-image
+### Text-to-image
 ![text-to-image visualizations](visuals/case_t2i.jpg)
-### 6.4. Class-to-image
+### Class-to-image
 ![class-to-image visualizations](visuals/case_c2i.jpg)
