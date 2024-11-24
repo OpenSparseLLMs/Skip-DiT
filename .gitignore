@@ -1,0 +1,9 @@
+.vscode
+**/*tmp*
+**/*result*
+**/logs
+**/**tmp
+**/pretrained
+**/ckpt
+**/ckpts
+**/__pycache__
