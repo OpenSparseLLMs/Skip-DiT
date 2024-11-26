@@ -1,7 +1,23 @@
 ## Accelerating Vision Diffusion Transformers with Skip Branches
 
-![Demo of Skip-Cache and Skip-DiT](visuals/demo2.jpg)
-(Results and generation speed comparison of **Skip-DiT** cached with **Skip-Cache** and its original version. Utilizing the skipping branch, Skip-DiT can significantly boost inference speed **(up to around $2\times$ speedup)** of both **image and video** while preserving original quality. Latency is measured on one A100.)
+
+<div align="center">
+  <img src="visuals/merge.gif" width="90%" ></img>
+  <br>
+  <em>
+      (Results of Latte with skip-branches on text-to-video and class-to-video tasks. Latency is measured on one A100.) 
+  </em>
+</div>
+<br>
+
+<div align="center">
+  <img src="visuals/demo2.jpg" width="100%" ></img>
+  <br>
+  <em>
+      (Results of HunYuan-DiT with skip-branches on text-to-image task. Latency is measured on one A100.) 
+  </em>
+</div>
+<br>
 
 <!-- >**Accelerating Vision Diffusion Transformers with Skip Branches**
 >
@@ -11,7 +27,7 @@
 
 ## About
 
-This repository contains the official PyTorch implementation of the paper: **"[Accelerating Vision Diffusion Transformers with Skip Branches]()"**. In this work, we enhance standard DiT models by introducing **Skip-DiT**, which incorporates skip branches to improve feature smoothness. We also propose **Skip-Cache**, a method that leverages skip branches to cache DiT features across timesteps during inference.
+This repository contains the official PyTorch implementation of the paper: **[Accelerating Vision Diffusion Transformers with Skip Branches]()**. In this work, we enhance standard DiT models by introducing **Skip-DiT**, which incorporates skip branches to improve feature smoothness. We also propose **Skip-Cache**, a method that leverages skip branches to cache DiT features across timesteps during inference.
 
 The effectiveness of our approach is validated on various DiT backbones for both video and image generation, demonstrating how skip branches preserve generation quality while achieving significant speedup. Experimental results show that **Skip-Cache** provides a $1.5\times$ speedup with minimal computational cost and a $2.2\times$ speedup with only a slight reduction in quantitative metrics.
 
@@ -20,6 +36,10 @@ The effectiveness of our approach is validated on various DiT backbones for both
 ## Skip-DiT and Skip-Cache
 ![pipeline](visuals/pipeline.jpg)
 Illustration of Skip-DiT and Skip-Cache for DiT visual generation caching. (a) The vanilla DiT block for image and video generation. (b) Skip-DiT modifies the vanilla DiT model using skip branches to connect shallow and deep DiT blocks. (c) Given a Skip-DiT with $L$ layers, during inference, at the $t-1$ step, the first layer output  ${x'}^{t-1}\_{0}$ and cached $L-1$ layer output ${x'}^t_{L-1}$ are forwarded through the skip branches to the final DiT block to generate the denoising output, without executing DiT blocks 2 to $L-1$.
+
+## Feature Smoothness
+![feature](visuals/feature.jpg)
+Feature smoothness analysis of DiT in the class-to-video generation task using DDPM. Normalized disturbances, controlled by strength coefficients $\alpha$ and $\beta$, are introduced to the model with and without skip connections. We compare the similarity between the original and perturbed features. The feature difference surface of Latte, with and without skip connections, is visualized at steps 10 and 250 of DDPM. The results show significantly better feature smoothness in Skip-DiT. Furthermore, we identify feature smoothness as a critical factor limiting the effectiveness of cross-timestep feature caching in DiT. This insight provides a deeper understanding of caching efficiency and its impact on performance.
 
 ## Pretrained Model
 | Model | Task | Training Data | Backbone | Size(G) | Skip-Cache |
@@ -32,7 +52,7 @@ Illustration of Skip-DiT and Skip-Cache for DiT visual generation caching. (a) T
 | [ffs-skip](https://huggingface.co/GuanjieChen/Skip-DiT/blob/main/ffs-skip.pt) | class-to-video|FaceForensics|Latte|2.77|✅ |
 
 Pretrained text-to-image Model of [HunYuan-DiT](https://github.com/Tencent/HunyuanDiT) can be found in [Huggingface](https://huggingface.co/Tencent-Hunyuan/HunyuanDiT-v1.2/tree/main/t2i/model) and [Tencent-cloud](https://dit.hunyuan.tencent.com/download/HunyuanDiT/model-v1_2.zip).
-## 1. Installation
+## Installation
 To prepare environments for `class-to-video`, `text-to-video` tasks, please refer to [Latte](https://github.com/Vchitect/Latte) or you can:
 ```shell
 cd class-to-video
@@ -54,7 +74,7 @@ conda env create -f environment.yaml
 conda activate HunyuanDiT
 ```
 
-## 2. Download pretrained models
+## Download pretrained models
 To download models, first install:
 ```shell
 python -m pip install "huggingface_hub[cli]"
@@ -97,7 +117,7 @@ wget -P ckpts https://dl.fbaipublicfiles.com/DiT/models/DiT-XL-2-256x256.pt
 huggingface-cli download GuanjieChen/Skip-DiT/DiT-XL-2-skip.pt -d ./ckpts
 ```
 
-## 3. Inference & Acceleration
+## Inference & Acceleration
 To infer with text-to-video models:
 ```shell
 cd text-to-video
@@ -138,7 +158,7 @@ python sample.py --ckpt path/to/DiT-XL-2-skip.pt --model DiT-skip
 python sample.py --ckpt path/to/DiT-XL-2-skip.pt --model DiT-cache-2 # or DiT-cache-3, DiT-cache-4...
 ```
 
-## 4. Training
+## Training
 To train the DiT-XL/2-skip:
 1. Download the [ImageNet](https://www.image-net.org/) dataset.
 2. Implement the TODO in the train.py
@@ -155,14 +175,14 @@ To train the text-to-video model:
    1. Freeze all the parameters except skip-branches. Set `freeze=True` in `text-to-video/configs/train_t2v.yaml`. And then run the training scripts.
    2. Overall training. Set `freeze=False` in `text-to-video/configs/train_t2v.yaml`. And then run the training scripts.
 
-## 5. Acknowledgement
+## Acknowledgement
 Skip-DiT has been greatly inspired by the following amazing works and teams: [DeepCache](https://arxiv.org/abs/2312.00858), [Latte](https://github.com/Vchitect/Latte), [DiT](https://github.com/facebookresearch/DiT), and [HunYuan-DiT](https://github.com/Tencent/HunyuanDiT), we thank all the contributors for open-sourcing.
 
-## 6. License
+## License
 The code and model weights are licensed under [LICENSE](./class-to-image/LICENSE).
 
 
-## 7. Visualization
+## Visualization
 ### Text-to-Video
 ![text-to-video visualizations](visuals/case_t2v.jpg)
 ### Class-to-Video
