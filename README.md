@@ -2,7 +2,7 @@
 
 
 <div align="center">
-  <img src="visuals/merge.gif" width="100%" ></img>
+  <img src="visuals/merge.gif" width="80%" ></img>
   <br>
   <em>
       (Results of Latte with skip-branches on text-to-video and class-to-video tasks. Latency is measured on one A100.) 
