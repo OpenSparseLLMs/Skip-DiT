@@ -1,7 +1,7 @@
 ## Accelerating Vision Diffusion Transformers with Skip Branches
 
 ![Demo of Skip-Cache and Skip-DiT](visuals/demo2.jpg)
-(Results and generation speed comparison of **Skip-DiT** cached with **Skip-Cache** and its original version. Utilizing the skipping branch, Skip-DiT can significantly boost inference speed **(up to around $2\times$ speedup)** while preserving original quality. Latency is measured on one A100.)
+(Results and generation speed comparison of **Skip-DiT** cached with **Skip-Cache** and its original version. Utilizing the skipping branch, Skip-DiT can significantly boost inference speed **(up to around $2\times$ speedup)** of both **image and video** while preserving original quality. Latency is measured on one A100.)
 
 <!-- >**Accelerating Vision Diffusion Transformers with Skip Branches**
 >
