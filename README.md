@@ -1,4 +1,4 @@
-# Accelerating Vision Diffusion Transformers with Skip Branches
+## Accelerating Vision Diffusion Transformers with Skip Branches
 
 ### About
 
