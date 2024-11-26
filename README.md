@@ -1,6 +1,13 @@
 ## Accelerating Vision Diffusion Transformers with Skip Branches
 
 ![Demo of Skip-Cache and Skip-DiT](visuals/demo2.jpg)
+(Results and generation speed comparison of **Skip-DiT** cached with **Skip-Cache** and its original version. Utilizing the skipping branch, Skip-DiT can significantly boost inference speed while preserving original quality. Latency is measured on one A100. We use Latte as the backbone model for video generation, and Hunyuan-DiT for image generation.)
+
+<!-- >**Accelerating Vision Diffusion Transformers with Skip Branches**
+>
+> [Guanjie Chen](), [Xinyu Zhao](),[Yucheng Zhou](), [Tianlong Chen](), [Yu Cheng]()
+>
+> [Arxiv](), [Huggingface](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main) -->
 
 ## About
 
