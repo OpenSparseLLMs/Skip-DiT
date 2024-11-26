@@ -1,7 +1,7 @@
 ## Accelerating Vision Diffusion Transformers with Skip Branches
 
 ![Demo of Skip-Cache and Skip-DiT](visuals/demo2.jpg)
-(Results and generation speed comparison of **Skip-DiT** cached with **Skip-Cache** and its original version. Utilizing the skipping branch, Skip-DiT can significantly boost inference speed while preserving original quality. Latency is measured on one A100. We use Latte as the backbone model for video generation, and Hunyuan-DiT for image generation.)
+(Results and generation speed comparison of **Skip-DiT** cached with **Skip-Cache** and its original version. Utilizing the skipping branch, Skip-DiT can significantly boost inference speed **(up to around 2$\times$ speedup)** while preserving original quality. Latency is measured on one A100.)
 
 <!-- >**Accelerating Vision Diffusion Transformers with Skip Branches**
 >
@@ -11,7 +11,7 @@
 
 ## About
 
-This repository contains the official PyTorch implementation of the paper: **"Accelerating Vision Diffusion Transformers with Skip Branches"**. In this work, we enhance standard DiT models by introducing **Skip-DiT**, which incorporates skip branches to improve feature smoothness. We also propose **Skip-Cache**, a method that leverages skip branches to cache DiT features across timesteps during inference.
+This repository contains the official PyTorch implementation of the paper: **"[Accelerating Vision Diffusion Transformers with Skip Branches]()"**. In this work, we enhance standard DiT models by introducing **Skip-DiT**, which incorporates skip branches to improve feature smoothness. We also propose **Skip-Cache**, a method that leverages skip branches to cache DiT features across timesteps during inference.
 
 The effectiveness of our approach is validated on various DiT backbones for both video and image generation, demonstrating how skip branches preserve generation quality while achieving significant speedup. Experimental results show that **Skip-Cache** provides a $1.5\times$ speedup with minimal computational cost and a $2.2\times$ speedup with only a slight reduction in quantitative metrics.
 
@@ -21,6 +21,17 @@ The effectiveness of our approach is validated on various DiT backbones for both
 ![pipeline](visuals/pipeline.jpg)
 Illustration of Skip-DiT and Skip-Cache for DiT visual generation caching. (a) The vanilla DiT block for image and video generation. (b) Skip-DiT modifies the vanilla DiT model using skip branches to connect shallow and deep DiT blocks. (c) Given a Skip-DiT with $L$ layers, during inference, at the $t-1$ step, the first layer output  ${x'}^{t-1}\_{0}$ and cached $L-1$ layer output ${x'}^t_{L-1}$ are forwarded through the skip branches to the final DiT block to generate the denoising output, without executing DiT blocks 2 to $L-1$.
 
+## Pretrained Model
+| Model | Task | Training Data | Backbone | Size(G) |
+|:--:|:--:|:--:|:--:|:--:|
+| [Latte-skip](https://huggingface.co/GuanjieChen/Skip-DiT/blob/main/DiT-XL-2-skip.pt) | text-to-video |Vimeo|Latte|8.76|
+| [DiT-XL/2-skip](https://huggingface.co/GuanjieChen/Skip-DiT/blob/main/Latte-skip.pt) | class-to-image |ImageNet|DiT-XL/2|11.40|
+| [ucf101-skip](https://huggingface.co/GuanjieChen/Skip-DiT/blob/main/ucf101-skip.pt) | class-to-video|UCF101|Latte|2.77|
+| [taichi-skip](https://huggingface.co/GuanjieChen/Skip-DiT/blob/main/taichi-skip.pt) | class-to-video|Taichi-HD|Latte|2.77|
+| [skytimelapse-skip](https://huggingface.co/GuanjieChen/Skip-DiT/blob/main/skylapse-skip.pt) | class-to-video|SkyTimelapse|Latte|2.77|
+| [ffs-skip](https://huggingface.co/GuanjieChen/Skip-DiT/blob/main/ffs-skip.pt) | class-to-video|FaceForensics|Latte|2.77|
+
+Pretrainined Model of [HunYuan-DiT](https://github.com/Tencent/HunyuanDiT) can be found in [Huggingface](https://huggingface.co/Tencent-Hunyuan/HunyuanDiT-v1.2/tree/main/t2i/model) and [Tencent-cloud](https://dit.hunyuan.tencent.com/download/HunyuanDiT/model-v1_2.zip).
 ## 1. Installation
 To prepare environments for `class-to-video`, `text-to-video` tasks, please refer to [Latte](https://github.com/Vchitect/Latte) or you can:
 ```shell
