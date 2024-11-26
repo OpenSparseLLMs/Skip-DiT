@@ -2,7 +2,7 @@
 
 
 <div align="center">
-  <img src="visuals/merge.gif" width="90%" ></img>
+  <img src="visuals/video-demo.gif" width="90%" ></img>
   <br>
   <em>
       (Results of Latte with skip-branches on text-to-video and class-to-video tasks. Latency is measured on one A100.) 
@@ -11,7 +11,7 @@
 <br>
 
 <div align="center">
-  <img src="visuals/demo2.jpg" width="100%" ></img>
+  <img src="visuals/image-demo.jpg" width="100%" ></img>
   <br>
   <em>
       (Results of HunYuan-DiT with skip-branches on text-to-image task. Latency is measured on one A100.) 
