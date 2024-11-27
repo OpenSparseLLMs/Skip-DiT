@@ -41,7 +41,7 @@ Illustration of Skip-DiT and Skip-Cache for DiT visual generation caching. (a) T
 ![feature](visuals/feature.jpg)
 Feature smoothness analysis of DiT in the class-to-video generation task using DDPM. Normalized disturbances, controlled by strength coefficients $\alpha$ and $\beta$, are introduced to the model with and without skip connections. We compare the similarity between the original and perturbed features. The feature difference surface of Latte, with and without skip connections, is visualized at steps 10 and 250 of DDPM. The results show significantly better feature smoothness in Skip-DiT. Furthermore, we identify feature smoothness as a critical factor limiting the effectiveness of cross-timestep feature caching in DiT. This insight provides a deeper understanding of caching efficiency and its impact on performance.
 
-### Pretrained Model
+### Pretrained Models
 | Model | Task | Training Data | Backbone | Size(G) | Skip-Cache |
 |:--:|:--:|:--:|:--:|:--:|:--:|
 | [Latte-skip](https://huggingface.co/GuanjieChen/Skip-DiT/blob/main/DiT-XL-2-skip.pt) | text-to-video |Vimeo|Latte|8.76| ✅ |
