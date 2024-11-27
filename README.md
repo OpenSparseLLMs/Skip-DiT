@@ -1,7 +1,7 @@
 # Accelerating Vision Diffusion Transformers with Skip Branches
 <div align="center">
   <a href="https://github.com/OpenSparseLLMs/Skip-DiT"><img src="https://img.shields.io/static/v1?label=Skip-DiT-Code&message=Github&color=blue&logo=github-pages"></a> &ensp;
-  <a href="https://github.com/OpenSparseLLMs/Skip-DiT"><img src="https://img.shields.io/static/v1?label=Paper&message=Arxiv:Skip-DiT&color=red&logo=arxiv"></a> &ensp;
+  <a href="https://arxiv.org/abs/2411.17616"><img src="https://img.shields.io/static/v1?label=Paper&message=Arxiv:Skip-DiT&color=red&logo=arxiv"></a> &ensp;
   <a href="https://huggingface.co/GuanjieChen/Skip-DiT"><img src="https://img.shields.io/static/v1?label=Skip-DiT&message=HuggingFace&color=yellow"></a> &ensp;
 </div>
 
@@ -31,7 +31,7 @@
 > [Arxiv](), [Huggingface](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main) -->
 
 ### About
-This repository contains the official PyTorch implementation of the paper: **[Accelerating Vision Diffusion Transformers with Skip Branches]()**. In this work, we enhance standard DiT models by introducing **Skip-DiT**, which incorporates skip branches to improve feature smoothness. We also propose **Skip-Cache**, a method that leverages skip branches to cache DiT features across timesteps during inference.The effectiveness of our approach is validated on various DiT backbones for both video and image generation, demonstrating how skip branches preserve generation quality while achieving significant speedup. Experimental results show that **Skip-Cache** provides a $1.5\times$ speedup with minimal computational cost and a $2.2\times$ speedup with only a slight reduction in quantitative metrics. All the codes and checkpoints are publicly available at [huggingface](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main) and [github](https://github.com/OpenSparseLLMs/Skip-DiT.git). More visualizations can be found [here](#visualization).
+This repository contains the official PyTorch implementation of the paper: **[Accelerating Vision Diffusion Transformers with Skip Branches](https://arxiv.org/abs/2411.17616)**. In this work, we enhance standard DiT models by introducing **Skip-DiT**, which incorporates skip branches to improve feature smoothness. We also propose **Skip-Cache**, a method that leverages skip branches to cache DiT features across timesteps during inference.The effectiveness of our approach is validated on various DiT backbones for both video and image generation, demonstrating how skip branches preserve generation quality while achieving significant speedup. Experimental results show that **Skip-Cache** provides a $1.5\times$ speedup with minimal computational cost and a $2.2\times$ speedup with only a slight reduction in quantitative metrics. All the codes and checkpoints are publicly available at [huggingface](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main) and [github](https://github.com/OpenSparseLLMs/Skip-DiT.git). More visualizations can be found [here](#visualization).
 
 ### Pipeline of Skip-DiT and Skip-Cache
 ![pipeline](visuals/pipeline.jpg)
