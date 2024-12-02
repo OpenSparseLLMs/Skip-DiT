@@ -10,7 +10,7 @@
   <img src="visuals/video-demo.gif" width="90%" ></img>
   <br>
   <em>
-      (Results of Latte with skip-branches on text-to-video and class-to-video tasks. Left: text-to-video with 1.7x and 2.0x speedup. Right: class-to-video with 2.2x and 2.5x speedup. Latency is measured on one A100.) 
+      (Results of Latte with skip-branches on text-to-video and class-to-video tasks. Left: text-to-video with 1.7x and 2.0x speedup. Right: class-to-video with 2.2x and 2.4x speedup. Latency is measured on one A100.) 
   </em>
 </div>
 <br>
