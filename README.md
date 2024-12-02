@@ -178,6 +178,7 @@ To train the text-to-video model:
 ### Acknowledgement
 Skip-DiT has been greatly inspired by the following amazing works and teams: [DeepCache](https://arxiv.org/abs/2312.00858), [Latte](https://github.com/Vchitect/Latte), [DiT](https://github.com/facebookresearch/DiT), and [HunYuan-DiT](https://github.com/Tencent/HunyuanDiT), we thank all the contributors for open-sourcing.
 
+
 ### License
 The code and model weights are licensed under [LICENSE](./class-to-image/LICENSE).
 
