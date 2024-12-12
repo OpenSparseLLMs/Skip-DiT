@@ -25,7 +25,6 @@ def main(args):
     torch.manual_seed(args.seed)
     torch.set_grad_enabled(False)
     device = "cuda" if torch.cuda.is_available() else "cpu"
-
     transformer_model = get_models(args).to(device, dtype=torch.float16)
     if args.pretrained:
         checkpoint = torch.load(args.pretrained, map_location=lambda storage, loc: storage)
@@ -119,9 +118,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     omega_conf = OmegaConf.load(args.config)
     if len(args.cache) > 0:
-        omega_conf.model = omega_conf.model+args.cache
-    else:
-        omega_conf.model = omega_conf.model+'_'+omega_conf.cache
+        omega_conf.model = omega_conf.model+'_'+args.cache
     main(omega_conf)
 
 

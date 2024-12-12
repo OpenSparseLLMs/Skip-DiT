@@ -44,7 +44,8 @@ def get_models(args):
         return LatteT2V_skip.from_pretrained(args.pretrained_model_path, subfolder="transformer", low_cpu_mem_usage=False, device_map=None, video_length=args.video_length,)
     elif 'LatteT2V_skip_cache' in args.model:
         cache_setting = args.model.replace('LatteT2V_skip_cache', '')
-        if len(cache_setting)>0:
+        if len(cache_setting)>1:
+            # cache_setting = _Nxxx-xxx-xxx
             cache_gap = int(cache_setting.split('-')[0].replace('_N',''))
             cache_at_timesteps = [int(cache_setting.split('-')[1]), int(cache_setting.split('-')[2])]
         else:
@@ -53,5 +54,5 @@ def get_models(args):
         print(f'loading model: {args.model=} with cache setting gap: {cache_gap}, timestep: {cache_at_timesteps}')
         return LatteT2V_skip_cache.from_pretrained(args.pretrained_model_path, subfolder="transformer", low_cpu_mem_usage=False, device_map=None, video_length=args.video_length, cache_gap=cache_gap, cache_at_timesteps=cache_at_timesteps)
     else:
-        raise '{} Model Not Supported!'.format(args.model)
+        raise f'{args.model} Model Not Supported!'
     
