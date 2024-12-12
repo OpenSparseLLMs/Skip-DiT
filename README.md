@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://github.com/OpenSparseLLMs/Skip-DiT"><img src="https://img.shields.io/static/v1?label=Skip-DiT-Code&message=Github&color=blue&logo=github-pages"></a> &ensp;
-  <a href="https://github.com/OpenSparseLLMs/Skip-DiT"><img src="https://img.shields.io/static/v1?label=Paper&message=Arxiv:Skip-DiT&color=red&logo=arxiv"></a> &ensp;
+  <a href="https://arxiv.org/abs/2411.17616"><img src="https://img.shields.io/static/v1?label=Paper&message=Arxiv:Skip-DiT&color=red&logo=arxiv"></a> &ensp;
   <a href="https://huggingface.co/GuanjieChen/Skip-DiT"><img src="https://img.shields.io/static/v1?label=Skip-DiT&message=HuggingFace&color=yellow"></a> &ensp;
 </div>
 
@@ -11,7 +11,7 @@
   <img src="visuals/video-demo.gif" width="90%" ></img>
   <br>
   <em>
-      (Results of Latte with skip-branches on text-to-video and class-to-video tasks. Left: text-to-video with 1.7x and 2.0x speedup. Right: class-to-video with 2.2x and 2.5x speedup. Latency is measured on one A100.) 
+      (Results of Latte with skip-branches on text-to-video and class-to-video tasks with Latte. Left: text-to-video with 1.7x and 2.0x speedup. Right: class-to-video with 2.2x and 2.4x speedup. Latency is measured on one A100.) 
   </em>
 </div>
 <br>
@@ -20,7 +20,7 @@
   <img src="visuals/image-demo.jpg" width="100%" ></img>
   <br>
   <em>
-      (Results of HunYuan-DiT with skip-branches on text-to-image task. Latency is measured on one A100.) 
+      (Results of HunYuan-DiT with skip-branches on text-to-image task with Hunyuan-DiT. Latency is measured on one A100.) 
   </em>
 </div>
 <br>
@@ -31,16 +31,17 @@
 >
 > [Arxiv](), [Huggingface](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main) -->
 
-
-### News
-
-
 ### About
-This repository contains the official PyTorch implementation of the paper: **[Accelerating Vision Diffusion Transformers with Skip Branches]()**. In this work, we enhance standard DiT models by introducing **Skip-DiT**, which incorporates skip branches to improve feature smoothness. We also propose **Skip-Cache**, a method that leverages skip branches to cache DiT features across timesteps during inference.The effectiveness of our approach is validated on various DiT backbones for both video and image generation, demonstrating how skip branches preserve generation quality while achieving significant speedup. Experimental results show that **Skip-Cache** provides a $1.5\times$ speedup with minimal computational cost and a $2.2\times$ speedup with only a slight reduction in quantitative metrics. All the codes and checkpoints are publicly available at [huggingface](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main) and [github](https://github.com/OpenSparseLLMs/Skip-DiT.git). More visualizations can be found [here](#visualization).
+This repository contains the official PyTorch implementation of the paper: **[Accelerating Vision Diffusion Transformers with Skip Branches](https://arxiv.org/abs/2411.17616)**. In this work, we enhance standard DiT models by introducing **Skip-DiT**, which incorporates skip branches to improve feature smoothness. We also propose **Skip-Cache**, a method that leverages skip branches to cache DiT features across timesteps during inference.The effectiveness of our approach is validated on various DiT backbones for both video and image generation, demonstrating how skip branches preserve generation quality while achieving significant speedup. Experimental results show that **Skip-Cache** provides a $1.5\times$ speedup with minimal computational cost and a $2.2\times$ speedup with only a slight reduction in quantitative metrics. All the codes and checkpoints are publicly available at [huggingface](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main) and [github](https://github.com/OpenSparseLLMs/Skip-DiT.git). More visualizations can be found [here](#visualization).
+
 
 > [**Accelerating Vision Diffusion Transformers with Skip Branches**]()<br>
 > [Guanjie Chen*](https://scholar.google.com/citations?user=cpBU1VgAAAAJ&hl=zh-CN), [Xinyu Zhao*](https://scholar.google.com/citations?hl=en&user=1cj23VYAAAAJ), [Tianlong Chen^](https://scholar.google.com/citations?user=LE3ctn0AAAAJ&hl=en), [Yu Cheng^](https://scholar.google.com/citations?user=ORPxbV4AAAAJ&hl=en)
 > (contact us: chenguanjie@sjtu.edu.cn, xinyu@cs.unc.edu)
+
+### News
+(🔥News) We released the first Text-to-Video model with Skip-Branches: [Latte-skip](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main). You can generate videos by yourself with only [3 command lines](#quick-start)!
+
 
 ### Pipeline of Skip-DiT and Skip-Cache
 ![pipeline](visuals/pipeline.jpg)
@@ -50,7 +51,7 @@ Illustration of Skip-DiT and Skip-Cache for DiT visual generation caching. (a) T
 ![feature](visuals/feature.jpg)
 Feature smoothness analysis of DiT in the class-to-video generation task using DDPM. Normalized disturbances, controlled by strength coefficients $\alpha$ and $\beta$, are introduced to the model with and without skip connections. We compare the similarity between the original and perturbed features. The feature difference surface of Latte, with and without skip connections, is visualized at steps 10 and 250 of DDPM. The results show significantly better feature smoothness in Skip-DiT. Furthermore, we identify feature smoothness as a critical factor limiting the effectiveness of cross-timestep feature caching in DiT. This insight provides a deeper understanding of caching efficiency and its impact on performance.
 
-### Pretrained Model
+### Pretrained Models
 | Model | Task | Training Data | Backbone | Size(G) | Skip-Cache |
 |:--:|:--:|:--:|:--:|:--:|:--:|
 | [Latte-skip](https://huggingface.co/GuanjieChen/Skip-DiT/blob/main/DiT-XL-2-skip.pt) | text-to-video |Vimeo|Latte|8.76| ✅ |
@@ -104,6 +105,7 @@ The training instructions of `class-to-video` and `text-to-video` tasks can be f
 
 ### Acknowledgement
 Skip-DiT has been greatly inspired by the following amazing works and teams: [DeepCache](https://arxiv.org/abs/2312.00858), [Latte](https://github.com/Vchitect/Latte), [DiT](https://github.com/facebookresearch/DiT), and [HunYuan-DiT](https://github.com/Tencent/HunyuanDiT), we thank all the contributors for open-sourcing.
+
 
 ### License
 The code and model weights are licensed under [LICENSE](./class-to-image/LICENSE).
