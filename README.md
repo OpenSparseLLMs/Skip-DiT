@@ -32,12 +32,12 @@ This repository contains the official PyTorch implementation of the paper: **[Ac
 > (contact us: chenguanjie@sjtu.edu.cn, xinyu@cs.unc.edu)
 
 ### 🔥 News
-(🔥News)Dec 12, 2024🔥 We released the **First Text-to-Video Model with Skip-Branches**: [Latte-Skip](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main). You can generate videos with only [3 command lines](#text-to-video-inference)! 
-
+(🔥News) Dec 12, 2024🔥 [**Latte-Skip**](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main) is now fully released, which is the **First Text-to-Video Model with Skip-Branches**, and can be accelerate 2x for fre with **Skip-Cache**! You can generate videos with only [**3 command lines**](#text-to-video-inference)!
 
 <video controls loop src="https://github.com/user-attachments/assets/90878b0e-ff69-415a-b786-e0b6587b0a0b" type="video/mp4"></video>
 (Visualizations of Latte-Skip. You can replicate them [here](#text-to-video-inference))
 
+(🔥News) Nov 26, 2024🔥 The training and inference code for Skip-DiT is publicly available, along with all corresponding checkpoints (DiT-XL/2, FaceForensics, SkyTimelapse, UCF101, and Taichi-HD), which can be accessed [here](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main). Additionally, these models, including Hunyuan-DiT, are fully compatible with Skip-Cache for enhanced efficiency.
 
 ### 🔍 Pipeline of Skip-DiT and Skip-Cache
 ![pipeline](visuals/pipeline.jpg)
