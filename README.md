@@ -7,14 +7,26 @@
 </div>
 
 
-<div align="center">
-  <img src="visuals/video-demo.gif" width="90%" ></img>
-  <br>
-  <em>
-      (Results of Latte with skip-branches on text-to-video and class-to-video tasks with Latte. Left: text-to-video with 1.7x and 2.0x speedup. Right: class-to-video with 2.2x and 2.4x speedup. Latency is measured on one A100.) 
-  </em>
-</div>
-<br>
+### About
+This repository contains the official PyTorch implementation of the paper: **[Accelerating Vision Diffusion Transformers with Skip Branches](https://arxiv.org/abs/2411.17616)**. In this work, we enhance standard DiT models by introducing **Skip-DiT**, which incorporates skip branches to improve feature smoothness. We also propose **Skip-Cache**, a method that leverages skip branches to cache DiT features across timesteps during inference.The effectiveness of our approach is validated on various DiT backbones for both video and image generation, demonstrating how skip branches preserve generation quality while achieving significant speedup. Experimental results show that **Skip-Cache** provides a $1.5\times$ speedup with minimal computational cost and a $2.2\times$ speedup with only a slight reduction in quantitative metrics. All the codes and checkpoints are publicly available at [huggingface](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main) and [github](https://github.com/OpenSparseLLMs/Skip-DiT.git). More visualizations can be found [here](#visualization).
+
+
+> [**Accelerating Vision Diffusion Transformers with Skip Branches**]()<br>
+> [Guanjie Chen*](https://scholar.google.com/citations?user=cpBU1VgAAAAJ&hl=zh-CN), [Xinyu Zhao*](https://scholar.google.com/citations?hl=en&user=1cj23VYAAAAJ), [Tianlong Chen^](https://scholar.google.com/citations?user=LE3ctn0AAAAJ&hl=en), [Yu Cheng^](https://scholar.google.com/citations?user=ORPxbV4AAAAJ&hl=en)
+> (contact us: chenguanjie@sjtu.edu.cn, xinyu@cs.unc.edu)
+
+### News
+(🔥News)Dec 12, 2024🔥 We released the **First Text-to-Video Model with Skip-Branches**: [Latte-Skip](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main). You can generate videos by yourself with only [3 command lines](#quick-start)! 
+
+
+<video controls loop src="visuals/latte-skip-cases.mp4" type="video/mp4"></video>
+(Visualizations of Latte-Skip. You can replicate them [here](#quick-start))
+
+
+### Pipeline of Skip-DiT and Skip-Cache
+![pipeline](visuals/pipeline.jpg)
+Illustration of Skip-DiT and Skip-Cache for DiT visual generation caching. (a) The vanilla DiT block for image and video generation. (b) Skip-DiT modifies the vanilla DiT model using skip branches to connect shallow and deep DiT blocks. (c) Given a Skip-DiT with $L$ layers, during inference, at the $t-1$ step, the first layer output  ${x'}^{t-1}\_{0}$ and cached $L-1$ layer output ${x'}^t_{L-1}$ are forwarded through the skip branches to the final DiT block to generate the denoising output, without executing DiT blocks 2 to $L-1$.
+
 
 <div align="center">
   <img src="visuals/image-demo.jpg" width="100%" ></img>
@@ -25,27 +37,15 @@
 </div>
 <br>
 
-<!-- >**Accelerating Vision Diffusion Transformers with Skip Branches**
->
-> [Guanjie Chen](), [Xinyu Zhao](),[Yucheng Zhou](), [Tianlong Chen](), [Yu Cheng]()
->
-> [Arxiv](), [Huggingface](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main) -->
+<div align="center">
+  <img src="visuals/video-demo.gif" width="100%" ></img>
+  <br>
+  <em>
+      (Results of Latte with skip-branches on text-to-video and class-to-video tasks with Latte. Left: text-to-video with 1.7x and 2.0x speedup. Right: class-to-video with 2.2x and 2.4x speedup. Latency is measured on one A100.) 
+  </em>
+</div>
+<br>
 
-### About
-This repository contains the official PyTorch implementation of the paper: **[Accelerating Vision Diffusion Transformers with Skip Branches](https://arxiv.org/abs/2411.17616)**. In this work, we enhance standard DiT models by introducing **Skip-DiT**, which incorporates skip branches to improve feature smoothness. We also propose **Skip-Cache**, a method that leverages skip branches to cache DiT features across timesteps during inference.The effectiveness of our approach is validated on various DiT backbones for both video and image generation, demonstrating how skip branches preserve generation quality while achieving significant speedup. Experimental results show that **Skip-Cache** provides a $1.5\times$ speedup with minimal computational cost and a $2.2\times$ speedup with only a slight reduction in quantitative metrics. All the codes and checkpoints are publicly available at [huggingface](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main) and [github](https://github.com/OpenSparseLLMs/Skip-DiT.git). More visualizations can be found [here](#visualization).
-
-
-> [**Accelerating Vision Diffusion Transformers with Skip Branches**]()<br>
-> [Guanjie Chen*](https://scholar.google.com/citations?user=cpBU1VgAAAAJ&hl=zh-CN), [Xinyu Zhao*](https://scholar.google.com/citations?hl=en&user=1cj23VYAAAAJ), [Tianlong Chen^](https://scholar.google.com/citations?user=LE3ctn0AAAAJ&hl=en), [Yu Cheng^](https://scholar.google.com/citations?user=ORPxbV4AAAAJ&hl=en)
-> (contact us: chenguanjie@sjtu.edu.cn, xinyu@cs.unc.edu)
-
-### News
-(🔥News) We released the first Text-to-Video model with Skip-Branches: [Latte-skip](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main). You can generate videos by yourself with only [3 command lines](#quick-start)!
-
-
-### Pipeline of Skip-DiT and Skip-Cache
-![pipeline](visuals/pipeline.jpg)
-Illustration of Skip-DiT and Skip-Cache for DiT visual generation caching. (a) The vanilla DiT block for image and video generation. (b) Skip-DiT modifies the vanilla DiT model using skip branches to connect shallow and deep DiT blocks. (c) Given a Skip-DiT with $L$ layers, during inference, at the $t-1$ step, the first layer output  ${x'}^{t-1}\_{0}$ and cached $L-1$ layer output ${x'}^t_{L-1}$ are forwarded through the skip branches to the final DiT block to generate the denoising output, without executing DiT blocks 2 to $L-1$.
 
 ### Feature Smoothness
 ![feature](visuals/feature.jpg)
