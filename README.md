@@ -1,4 +1,5 @@
 # Accelerating Vision Diffusion Transformers with Skip Branches
+
 <div align="center">
   <a href="https://github.com/OpenSparseLLMs/Skip-DiT"><img src="https://img.shields.io/static/v1?label=Skip-DiT-Code&message=Github&color=blue&logo=github-pages"></a> &ensp;
   <a href="https://github.com/OpenSparseLLMs/Skip-DiT"><img src="https://img.shields.io/static/v1?label=Paper&message=Arxiv:Skip-DiT&color=red&logo=arxiv"></a> &ensp;
@@ -30,8 +31,16 @@
 >
 > [Arxiv](), [Huggingface](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main) -->
 
+
+### News
+
+
 ### About
 This repository contains the official PyTorch implementation of the paper: **[Accelerating Vision Diffusion Transformers with Skip Branches]()**. In this work, we enhance standard DiT models by introducing **Skip-DiT**, which incorporates skip branches to improve feature smoothness. We also propose **Skip-Cache**, a method that leverages skip branches to cache DiT features across timesteps during inference.The effectiveness of our approach is validated on various DiT backbones for both video and image generation, demonstrating how skip branches preserve generation quality while achieving significant speedup. Experimental results show that **Skip-Cache** provides a $1.5\times$ speedup with minimal computational cost and a $2.2\times$ speedup with only a slight reduction in quantitative metrics. All the codes and checkpoints are publicly available at [huggingface](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main) and [github](https://github.com/OpenSparseLLMs/Skip-DiT.git). More visualizations can be found [here](#visualization).
+
+> [**Accelerating Vision Diffusion Transformers with Skip Branches**]()<br>
+> [Guanjie Chen*](https://scholar.google.com/citations?user=cpBU1VgAAAAJ&hl=zh-CN), [Xinyu Zhao*](https://scholar.google.com/citations?hl=en&user=1cj23VYAAAAJ), [Tianlong Chen^](https://scholar.google.com/citations?user=LE3ctn0AAAAJ&hl=en), [Yu Cheng^](https://scholar.google.com/citations?user=ORPxbV4AAAAJ&hl=en)
+> (contact us: chenguanjie@sjtu.edu.cn, xinyu@cs.unc.edu)
 
 ### Pipeline of Skip-DiT and Skip-Cache
 ![pipeline](visuals/pipeline.jpg)
@@ -52,128 +61,46 @@ Feature smoothness analysis of DiT in the class-to-video generation task using D
 | [ffs-skip](https://huggingface.co/GuanjieChen/Skip-DiT/blob/main/ffs-skip.pt) | class-to-video|FaceForensics|Latte|2.77|✅ |
 
 Pretrained text-to-image Model of [HunYuan-DiT](https://github.com/Tencent/HunyuanDiT) can be found in [Huggingface](https://huggingface.co/Tencent-Hunyuan/HunyuanDiT-v1.2/tree/main/t2i/model) and [Tencent-cloud](https://dit.hunyuan.tencent.com/download/HunyuanDiT/model-v1_2.zip).
-### Installation
-To prepare environments for `class-to-video`, `text-to-video` tasks, please refer to [Latte](https://github.com/Vchitect/Latte) or you can:
+
+### Quick Start
+To generate videos by yourself, you just need 3 steps
 ```shell
-cd class-to-video
-conda env create -f environment.yaml
-conda activate latte
+# 1. Prepare your conda environments
+cd text-to-video ; conda env create -f environment.yaml ; conda activate latte
+# 2. Download checkpoints of Latte and Latte-skip
+python download.py
+# 3. Generate videos with only one command line!
+python sample/sample_t2v.py --config ./configs/t2v/t2v_sample_skip.yaml
+# 4. (Optional) To accelerate generation with skip-cache, run following command
+python sample/sample_t2v.py --config ./configs/t2v/t2v_sample_skip_cache.yaml --cache N2-700-50
 ```
 
-To prepare environments for `class-to-image` task, please refer to [DiT](https://github.com/facebookresearch/DiT) or you can:
+Under the same way, to generate images with Hunyuan-DiT, you just need 3 steps
 ```shell
-cd class-to-image
-conda env create -f environment.yaml
-conda activate DiT
+# 1. Prepare your conda environments
+cd text-to-image ; conda env create -f environment.yaml ; conda activate HunyuanDiT
+# 2. Download checkpoints of Hunyuan-DiT
+mkdir ckpts ; huggingface-cli download Tencent-Hunyuan/HunyuanDiT-v1.2 --local-dir ./ckpts
+# 3. Generate images with only one command line!
+python sample_t2i.py --prompt "渔舟唱晚"  --no-enhance --infer-steps 100 --image-size 1024 1024
+# 4. (Optional) To accelerate generation with skip-cache, run following command
+python sample_t2i.py --prompt "渔舟唱晚"  --no-enhance --infer-steps 100 --image-size 1024 1024 --cache --cache-step 2
 ```
 
-To prepare environments for text-to-image task, please refer to [Hunyuan-DiT](https://github.com/Tencent/HunyuanDiT):
-```shell
-cd text-to-image
-conda env create -f environment.yaml
-conda activate HunyuanDiT
-```
-
-### Download pretrained models
-To download models, first install:
-```shell
-python -m pip install "huggingface_hub[cli]"
-```
-To download models needed in text-to-video task:
-```shell
-# 1. Download the vae, encoder, tokenizer and orinal checkpoints of Latte. Models are download default to ./text-to-video/pretrained/
-cd text-to-video
-python pretrained/download_ckpts.py
-
-# 2. Download the checkpoint of Latte-skip
-huggingface-cli download GuanjieChen/Skip-DiT/Latte-skip.pt -d ./pretrained/
-```
-
-To download models needed in class-to-video tasks.
-```shell
-cd class-to-video
-# 1. Download vae models and original checkpoints of Latte:
-python pretrained/download_ckpts.py
-
-# 2. Download the checkpoint of Latte-skip
-task_name=ffs # or UCF101, skytimelapse, taichi
-huggingface-cli download GuanjieChen/Skip-DiT/${task}-skip.pt -d ./pretrained/
-```
-
-To download models needed in text-to-image task:
-```shell
-cd text-to-image
-mkdir ckpts
-huggingface-cli download Tencent-Hunyuan/HunyuanDiT-v1.2 --local-dir ./ckpts
-```
-
-To download models needed in class-to-image task:
-```shell
-cd class-to-image
-mkdir ckpts
-# 1. download DiT-XL/2
-wget -P ckpts https://dl.fbaipublicfiles.com/DiT/models/DiT-XL-2-256x256.pt
-# 2. download DiT-XL/2-skip
-huggingface-cli download GuanjieChen/Skip-DiT/DiT-XL-2-skip.pt -d ./ckpts
-```
-
-### Inference & Acceleration
-To infer with text-to-video models:
-```shell
-cd text-to-video
-# 1. infer with original latte
-./sample/t2v.sh
-# 2. infer with skip dit
-./sample/t2v_skip.sh
-# 3. accelerate with skip-cache
-./sample/t2v_skip_cache.sh
-```
-
-To infer with class-to-video models:
-```shell
-task_name=ffs # or UCF101, skytimelapse, taichi-hd
-cd class-to-video
-# 1. infer with original latte
-./sample/${task_name}.sh
-# 2. infer with skip dit
-./sample/${task_name}_skip.sh
-# 3. accelerate with skip-cache
-./sample/${task_name}_cache.sh
-```
-
-To infer with text-to-image model, please follow the instructions in the official implementation of [HunYuan-DiT](https://github.com/Tencent/HunyuanDiT.git). To use **Skip-Cache**, add the following command to inference scripts `./infer.sh`:
-```shell
---deepcache -N {2,3,4...}
-```
+About the class-to-video and class-to-image task, you can found detailed instructions in `class-to-video/README.md` and `class-to-image/README.md`
 
 
-To infer with class-to-image models:
-```shell
-cd class-to-image
-# 1. infer with DiT-XL/2
-python sample.py --ckpt path/to/DiT-XL-2.pt --model DiT-XL/2
-# 2. infer with DiT-XL/2-skip
-python sample.py --ckpt path/to/DiT-XL-2-skip.pt --model DiT-skip
-# 3. accelerate with skip-cache
-python sample.py --ckpt path/to/DiT-XL-2-skip.pt --model DiT-cache-2 # or DiT-cache-3, DiT-cache-4...
-```
 
 ### Training
-To train the DiT-XL/2-skip:
-1. Download the [ImageNet](https://www.image-net.org/) dataset.
-2. Implement the TODO in the train.py
-3. run the script `run_train.sh`
 
-To train the class-to-video models:
-1. Download the datasets offered by [Xin Ma](https://huggingface.co/maxin-cn) in huggingface: [skytimelapse](Skip-DiT-open/maxin-cn/SkyTimelapse), [taichi](Skip-DiT-open/maxin-cn/Taichi-HD), [ffs](Skip-DiT-open/maxin-cn/FaceForensics). And you have to download [ucf101](https://www.crcv.ucf.edu/data/UCF101/UCF101.rar) from the website.
-2. Implement the TODOs in the training configs under `class-to-video/configs`
-3. Run the training scripts under `class-to-image/train_scripts`
-
-To train the text-to-video model:
+We have already released the training code of Latte-skip! It takes only few days on 8 H100 GPUs. To train the text-to-video model:
 1. Prepare your text-video datasets and implement the `text-to-video/datasets/t2v_joint_dataset.py`
 2. Run the two-stage training strategy:
-   1. Freeze all the parameters except skip-branches. Set `freeze=True` in `text-to-video/configs/train_t2v.yaml`. And then run the training scripts.
+   1. Freeze all the parameters except skip-branches. Set `freeze=True` in `text-to-video/configs/train_t2v.yaml`. And then run the training scripts at `text-to-video/train_scripts/t2v_joint_train_skip.sh`.
    2. Overall training. Set `freeze=False` in `text-to-video/configs/train_t2v.yaml`. And then run the training scripts.
+**The text-to-video model we released is trained with only 300k text-video pairs of Vimeo for around 1 week on 8 H100 GPUs.**
+
+The training instructions of `class-to-video` and `text-to-video` tasks can be found in `class-to-video/README.md` and `class-to-image/README.md`
 
 ### Acknowledgement
 Skip-DiT has been greatly inspired by the following amazing works and teams: [DeepCache](https://arxiv.org/abs/2312.00858), [Latte](https://github.com/Vchitect/Latte), [DiT](https://github.com/facebookresearch/DiT), and [HunYuan-DiT](https://github.com/Tencent/HunyuanDiT), we thank all the contributors for open-sourcing.
