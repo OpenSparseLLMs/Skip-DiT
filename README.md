@@ -38,7 +38,7 @@ This repository contains the official PyTorch implementation of the paper: **[Ac
 (🔥News)Dec 12, 2024🔥 We released the **First Text-to-Video Model with Skip-Branches**: [Latte-Skip](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main). You can generate videos by yourself with only [3 command lines](#quick-start)! 
 
 
-<video controls loop src="[visuals/latte-skip-cases.mp4](https://github.com/user-attachments/assets/90878b0e-ff69-415a-b786-e0b6587b0a0b)" type="video/mp4"></video>
+<video controls loop src="https://github.com/user-attachments/assets/90878b0e-ff69-415a-b786-e0b6587b0a0b" type="video/mp4"></video>
 (Visualizations of Latte-Skip. You can replicate them [here](#quick-start))
 
 
