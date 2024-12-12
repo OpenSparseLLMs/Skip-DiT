@@ -27,9 +27,8 @@
 ### 🎉🎉🎉 About
 This repository contains the official PyTorch implementation of the paper: **[Accelerating Vision Diffusion Transformers with Skip Branches](https://arxiv.org/abs/2411.17616)**. In this work, we enhance standard DiT models by introducing **Skip-DiT**, which incorporates skip branches to improve feature smoothness. We also propose **Skip-Cache**, which leverages skip branches to cache DiT features across timesteps during inference. The effectiveness of our approach is validated on various DiT backbones for both video and image generation, demonstrating how skip branches preserve generation quality while achieving significant speedup. Experimental results show that **Skip-Cache** provides a $1.5\times$ speedup with minimal computational cost and a $2.2\times$ speedup with only a slight reduction in quantitative metrics. All the codes and checkpoints are publicly available at [huggingface](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main) and [github](https://github.com/OpenSparseLLMs/Skip-DiT.git). More visualizations can be found [here](#visualization).
 
-
 > [**Accelerating Vision Diffusion Transformers with Skip Branches**](https://arxiv.org/abs/2411.17616)<br>
-> [Guanjie Chen](https://scholar.google.com/citations?user=cpBU1VgAAAAJ&hl=zh-CN), [Xinyu Zhao](https://scholar.google.com/citations?hl=en&user=1cj23VYAAAAJ), [Tianlong Chen](https://scholar.google.com/citations?user=LE3ctn0AAAAJ&hl=en), [Yu Cheng](https://scholar.google.com/citations?user=ORPxbV4AAAAJ&hl=en)         
+> [Guanjie Chen](https://scholar.google.com/citations?user=cpBU1VgAAAAJ&hl=zh-CN), [Xinyu Zhao](https://scholar.google.com/citations?hl=en&user=1cj23VYAAAAJ),[Yucheng Zhou](https://scholar.google.com/citations?user=nnbFqRAAAAAJ&hl=en), [Tianlong Chen](https://scholar.google.com/citations?user=LE3ctn0AAAAJ&hl=en), [Yu Cheng](https://scholar.google.com/citations?user=ORPxbV4AAAAJ&hl=en)         
 > (contact us: chenguanjie@sjtu.edu.cn, xinyu@cs.unc.edu)
 
 ### 🔥 News
