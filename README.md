@@ -27,7 +27,7 @@
 
 
 ### About
-This repository contains the official PyTorch implementation of the paper: **[Accelerating Vision Diffusion Transformers with Skip Branches](https://arxiv.org/abs/2411.17616)**. In this work, we enhance standard DiT models by introducing **Skip-DiT**, which incorporates skip branches to improve feature smoothness. We also propose **Skip-Cache**, a method that leverages skip branches to cache DiT features across timesteps during inference.The effectiveness of our approach is validated on various DiT backbones for both video and image generation, demonstrating how skip branches preserve generation quality while achieving significant speedup. Experimental results show that **Skip-Cache** provides a $1.5\times$ speedup with minimal computational cost and a $2.2\times$ speedup with only a slight reduction in quantitative metrics. All the codes and checkpoints are publicly available at [huggingface](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main) and [github](https://github.com/OpenSparseLLMs/Skip-DiT.git). More visualizations can be found [here](#visualization).
+This repository contains the official PyTorch implementation of the paper: **[Accelerating Vision Diffusion Transformers with Skip Branches](https://arxiv.org/abs/2411.17616)**. In this work, we enhance standard DiT models by introducing **Skip-DiT**, which incorporates skip branches to improve feature smoothness. We also propose **Skip-Cache**, which leverages skip branches to cache DiT features across timesteps during inference. The effectiveness of our approach is validated on various DiT backbones for both video and image generation, demonstrating how skip branches preserve generation quality while achieving significant speedup. Experimental results show that **Skip-Cache** provides a $1.5\times$ speedup with minimal computational cost and a $2.2\times$ speedup with only a slight reduction in quantitative metrics. All the codes and checkpoints are publicly available at [huggingface](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main) and [github](https://github.com/OpenSparseLLMs/Skip-DiT.git). More visualizations can be found [here](#visualization).
 
 
 > [**Accelerating Vision Diffusion Transformers with Skip Branches**](https://arxiv.org/abs/2411.17616)<br>
@@ -35,7 +35,7 @@ This repository contains the official PyTorch implementation of the paper: **[Ac
 > (contact us: chenguanjie@sjtu.edu.cn, xinyu@cs.unc.edu)
 
 ### News
-(🔥News)Dec 12, 2024🔥 We released the **First Text-to-Video Model with Skip-Branches**: [Latte-Skip](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main). You can generate videos by yourself with only [3 command lines](#quick-start)! 
+(🔥News)Dec 12, 2024🔥 We released the **First Text-to-Video Model with Skip-Branches**: [Latte-Skip](https://huggingface.co/GuanjieChen/Skip-DiT/tree/main). You can generate videos with only [3 command lines](#quick-start)! 
 
 
 <video controls loop src="https://github.com/user-attachments/assets/90878b0e-ff69-415a-b786-e0b6587b0a0b" type="video/mp4"></video>
@@ -49,7 +49,7 @@ Illustration of Skip-DiT and Skip-Cache for DiT visual generation caching. (a) T
 
 ### Feature Smoothness
 ![feature](visuals/feature.jpg)
-Feature smoothness analysis of DiT in the class-to-video generation task using DDPM. Normalized disturbances, controlled by strength coefficients $\alpha$ and $\beta$, are introduced to the model with and without skip connections. We compare the similarity between the original and perturbed features. The feature difference surface of Latte, with and without skip connections, is visualized at steps 10 and 250 of DDPM. The results show significantly better feature smoothness in Skip-DiT. Furthermore, we identify feature smoothness as a critical factor limiting the effectiveness of cross-timestep feature caching in DiT. This insight provides a deeper understanding of caching efficiency and its impact on performance.
+Feature smoothness analysis of DiT in the class-to-video generation task using DDPM. Normalized disturbances, controlled by strength coefficients $\alpha$ and $\beta$, are introduced to the model with and without skip connections. We compare the similarity between the original and perturbed features. The feature difference surface of the Latte, with and without skip connections, is visualized in steps 10 and 250 of DDPM. The results show significantly better feature smoothness in Skip-DiT. Furthermore, we identify feature smoothness as a critical factor limiting the effectiveness of cross-timestep feature caching in DiT. This insight provides a deeper understanding of caching efficiency and its impact on performance.
 
 ### Pretrained Models
 | Model | Task | Training Data | Backbone | Size(G) | Skip-Cache |
@@ -76,7 +76,7 @@ python sample/sample_t2v.py --config ./configs/t2v/t2v_sample_skip.yaml
 python sample/sample_t2v.py --config ./configs/t2v/t2v_sample_skip_cache.yaml --cache N2-700-50
 ```
 
-Under the same way, to generate images with Hunyuan-DiT, you just need 3 steps
+In the same way, to generate images with Hunyuan-DiT, you only need 3 steps
 ```shell
 # 1. Prepare your conda environments
 cd text-to-image ; conda env create -f environment.yaml ; conda activate HunyuanDiT
@@ -84,7 +84,7 @@ cd text-to-image ; conda env create -f environment.yaml ; conda activate Hunyuan
 mkdir ckpts ; huggingface-cli download Tencent-Hunyuan/HunyuanDiT-v1.2 --local-dir ./ckpts
 # 3. Generate images with only one command line!
 python sample_t2i.py --prompt "渔舟唱晚"  --no-enhance --infer-steps 100 --image-size 1024 1024
-# 4. (Optional) To accelerate generation with skip-cache, run following command
+# 4. (Optional) To accelerate generation with skip-cache, run the following command
 python sample_t2i.py --prompt "渔舟唱晚"  --no-enhance --infer-steps 100 --image-size 1024 1024 --cache --cache-step 2
 ```
 
@@ -94,7 +94,7 @@ About the class-to-video and class-to-image task, you can found detailed instruc
 
 ### Training
 
-We have already released the training code of Latte-skip! It takes only few days on 8 H100 GPUs. To train the text-to-video model:
+We have already released the training code of Latte-skip! It takes only a few days on 8 H100 GPUs. To train the text-to-video model:
 1. Prepare your text-video datasets and implement the `text-to-video/datasets/t2v_joint_dataset.py`
 2. Run the two-stage training strategy:
    1. Freeze all the parameters except skip-branches. Set `freeze=True` in `text-to-video/configs/train_t2v.yaml`. And then run the training scripts at `text-to-video/train_scripts/t2v_joint_train_skip.sh`.
