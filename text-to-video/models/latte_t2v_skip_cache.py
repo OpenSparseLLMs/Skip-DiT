@@ -526,6 +526,14 @@ class LatteT2V_skip_cache(ModelMixin, ConfigMixin):
         self.cache_at_timesteps = cache_at_timesteps
         self.cache_cont = 0
         self.cache_val = None
+        
+        # accumulate errors
+        self.errors = 0
+        self.history = {}
+        import json
+        with open('./models/history-mean.json', 'r') as f:
+            self.history = json.load(f)
+        
         self.use_linear_projection = use_linear_projection
         self.num_attention_heads = num_attention_heads
         self.attention_head_dim = attention_head_dim
@@ -844,7 +852,23 @@ class LatteT2V_skip_cache(ModelMixin, ConfigMixin):
         skip_N = self.cache_gap
         close_deepcache_at = self.cache_at_timesteps[1]
         start_deepcache_at = self.cache_at_timesteps[0]
+        
+        if cur_time in self.history.keys():
+            history_error = self.history[cur_time]
+        else:
+            history_error = 0
+        self.errors += history_error
+        
+        do_cache = False
         if self.cache_cont % skip_N == 0 or self.cache_val is None or cur_time >= start_deepcache_at:
+            do_cache = True
+        else:
+            self.errors = 0
+        if self.errors > 15*1e-5:
+            do_cache = False
+            self.errors = 0
+        
+        if do_cache:
             # do not cache
             for i, (spatial_block, temp_block) in enumerate(zip(self.transformer_blocks, self.temporal_transformer_blocks)):
                 if i == 28-skip_at_branch:
@@ -964,6 +988,7 @@ class LatteT2V_skip_cache(ModelMixin, ConfigMixin):
             # last few steps do not use cache
             self.cache_cont = 0
             self.cache_val = None
+            self.errors = 0
         if self.is_input_patches:
             if self.config.norm_type != "ada_norm_single":
                 conditioning = self.transformer_blocks[0].norm1.emb(
