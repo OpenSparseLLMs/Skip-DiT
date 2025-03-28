@@ -1,0 +1,41 @@
+# path:
+save_img_path: ./sample_results/t2v-skip/
+pretrained_model_path: ./pretrained/Latte-0
+pretrained: ./pretrained/Latte-skip/Latte-skip.pt
+
+model: LatteT2V_skip
+video_length: 16
+image_size: [512, 512]
+# # beta schedule
+beta_start: 0.0001
+beta_end: 0.02
+beta_schedule: "linear"
+variance_type: "learned_range"
+
+# model speedup
+use_compile: False
+use_fp16: True
+
+# sample config:
+seed: 0
+run_time: 0
+guidance_scale: 7.5
+sample_method: 'DDIM'
+num_sampling_steps: 50
+enable_temporal_attentions: True
+enable_vae_temporal_decoder: True
+text_prompt: [
+              'a beautiful sunset over a mountain range. The sky is filled with vibrant colors as the sun sets behind the mountains. The landscape is breathtakingly beautiful, and it seems like a peaceful moment in nature.',
+              'a beautiful waterfall located in the mountains. The waterfall is surrounded by lush greenery, and the sound of the water can be heard in the background. The scenery is breathtaking, and it seems like a peaceful and serene place to be.',
+              'a man singing into a microphone in a dimly lit room. He is wearing a black shirt and appears to be focused on his performance.',
+              'a woman wearing a red hoodie standing in a room and talking to the camera. The room appears to be a cabin, and the woman seems to be preparing for a camping trip.',
+              "a man wearing a coat and scarf standing in front of a crowd of people. He seems to be talking to them, but it's unclear what he's saying. It appears to be a public event or gathering.",
+              'a man standing on a stage and speaking to the audience. He is wearing a suit and tie, and he seems to be giving a lecture or presentation. The setting appears to be a church, and there are people in the audience listening to him.',
+              'a beautiful sunset over the ocean with a mountain in the background. The sky is filled with vibrant colors as the sun sets.',
+              "a stunning view of the night sky with the stars shining brightly. The camera pans across the sky, capturing the beauty of the stars in all their glory. It's a breathtaking sight to behold.",
+              "a panoramic view of a desert landscape with mountains in the background. The sky is filled with clouds, and the sun is setting in the horizon. The video captures the beauty of the desert and the changing colors of the sky.",
+              "a room with white walls and a large window. There is a couch and a table in the room, and it appears to be a living room with a view of a swimming pool.",
+              "a large wave crashing into the shore. The wave appears to be quite large and powerful, causing a lot of turbulence in the water.",
+              "a beautiful woman with long blonde hair standing in the sunlight. She is wearing a white dress and appears to be posing for the camera.",
+              "a panoramic view of a mountain range with snow-capped peaks. The landscape is breathtakingly beautiful, and the sky is clear and blue."
+              ]

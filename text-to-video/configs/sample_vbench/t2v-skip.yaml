@@ -1,0 +1,29 @@
+# path:
+save_img_path: "./sample_results/t2v-skip-vbench/"
+pretrained_model_path: "./pretrained/Latte-0"
+pretrained: /mnt/petrelfs/chenguanjie/cgj/Latte-skip/train_results/ckpts/Latte-v4-0330000.pt
+prompt_path: './prompts/prompts_per_dimension'
+
+
+model: LatteT2V_skip
+video_length: 16
+image_size: [512, 512]
+# # beta schedule
+beta_start: 0.0001
+beta_end: 0.02
+beta_schedule: "linear"
+variance_type: "learned_range"
+
+# model speedup
+use_compile: False
+use_fp16: True
+
+# sample config:
+seed: 1
+run_time: 0
+guidance_scale: 7.5
+sample_method: 'DDIM'
+num_sampling_steps: 50
+enable_temporal_attentions: True
+enable_vae_temporal_decoder: True # use temporal vae decoder from SVD, maybe reduce the video flicker (It's not widely tested)
+cache:
